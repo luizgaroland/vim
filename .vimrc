@@ -46,9 +46,9 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 "leader key
-:let mapleader = " "
+let mapleader = " "
 
-"fix ctrlc not firind insertLeaveEvent
+"Esc
 inoremap <S-Space> <ESC>
 
 "YCM
@@ -68,9 +68,10 @@ set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
 
 "colorScheme
 syntax enable
+set t_Co=256
 colorscheme gruvbox
 set background=dark
-let g:gruvbox_contrast_dark = hard
+let g:gruvbox_contrast_dark = 'hard'
 
 " Open nerdtree if no file specified
 "autocmd StdinReadPre * let s:std_in=1
