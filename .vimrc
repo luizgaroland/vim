@@ -63,6 +63,10 @@ filetype plugin on
 runtime macros/matchit.vim
 let b:match_debug = 1
 
+"No menu bar
+set guioptions -=m 
+set guioptions -=T
+
 "4 space tab
 set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
 
