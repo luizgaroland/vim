@@ -1,5 +1,5 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible " be iMproved, required
+filetype off " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -16,18 +16,24 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/syntastic'
-Plugin 'majutsushi/tagbar'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'mhinz/vim-startify'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'nanotech/jellybeans.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'elmcast/elm-vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'jwalton512/vim-blade'
-Plugin 'MattesGroeger/vim-bookmarks'
+Plugin 'alvan/vim-closetag'
+Plugin 'klen/python-mode.git'
+Plugin 'vim-scripts/vim-auto-save'
+Plugin 'tpope/vim-fugitive'
+Plugin 'myusuf3/numbers.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'jiangmiao/auto-pairs'
 Bundle 'zhaocai/GoldenView.Vim'
 
 " All of your Plugins must be added before the following line
@@ -48,14 +54,9 @@ filetype plugin indent on    " required
 "leader key
 let mapleader = " "
 
-"Esc
-inoremap <S-Space> <ESC>
-
-"YCM
-let g:ycm_server_python_interpreter = "/usr/bin/python"
-
 "line numbers
 set number
+set cc=80
 
 "matchit
 set nocompatible
@@ -63,9 +64,14 @@ filetype plugin on
 runtime macros/matchit.vim
 let b:match_debug = 1
 
-"No menu bar
-set guioptions -=m 
-set guioptions -=T
+"No menu bar gvim
+if has("gui_running")
+	set guifont=Monaco:h13
+	set guioptions -=m
+	set guioptions -=T
+	set guioptions-=r  "remove right-hand scroll bar
+	set guioptions-=L  "remove left-hand scroll bar
+endif
 
 "4 space tab
 set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
@@ -73,9 +79,9 @@ set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
 "colorScheme
 syntax enable
 set t_Co=256
+let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 set background=dark
-let g:gruvbox_contrast_dark = 'hard'
 
 " Open nerdtree if no file specified
 "autocmd StdinReadPre * let s:std_in=1
@@ -89,9 +95,6 @@ map <C-e> :NERDTreeToggle<CR>
 " try | NERDTreeToggle | catch | silent! NERDTree | endtry
 " endfunction
 
-"tagbarHotkey
-nnoremap <silent> <Leader>p :TagbarToggle<CR>
-
 "splits remap
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -104,8 +107,8 @@ set splitright
 
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+	exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+	exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 
 call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
@@ -124,52 +127,28 @@ call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 call NERDTreeHighlightFile('py', 'green', 'none', 'green', '#151515')
 call NERDTreeHighlightFile('pyc', 'Magenta', 'none', '#ff00ff', '#151515')
 
-" This allows buffers to be hidden if you've modified a buffer.
-" This is almost a must if you wish to use buffers in this way.
-set hidden
-
-" To open a new empty buffer
-" This replaces :tabnew which I used to bind to this mapping
-nmap <leader>T :enew<cr>
-
-" Move to the next buffer
-nmap <leader>l :bnext<CR>
-
-" Move to the previous buffer
-nmap <leader>h :bprevious<CR>
-
-" Close the current buffer and move to the previous one
-" This replicates the idea of closing a tab
-nmap <leader>bq :bp <BAR> bd #<CR>
-
-" Show all open buffers and their status
-nmap <leader>bl :ls<CR>
-
+"YouCompleteme
+let g:ycm_autoclose_preview_window_after_completion = 1
 " Setup some default ignores
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
-  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-\}
+			\ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+			\ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+			\}
 
 " Use the nearest .git directory as the cwd
 " This makes a lot of sense if you are working on a project that is in version
 " control. It also supports works with .svn, .hg, .bzr.
 let g:ctrlp_working_path_mode = 'r'
 
-" Easy bindings for its various modes
-nmap <leader>bb :CtrlPBuffer<cr>
-nmap <leader>bm :CtrlPMixed<cr>
-nmap <leader>bs :CtrlPMRU<cr>
-
-"syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"""syntastic
+""set statusline+=%#warningmsg#
+""set statusline+=%{SyntasticStatuslineFlag()}
+""set statusline+=%*
+""
+""let g:syntastic_always_populate_loc_list = 1
+""let g:syntastic_auto_loc_list = 1
+""let g:syntastic_check_on_open = 1
+""let g:syntastic_check_on_wq = 0
 
 "AirLine
 let g:airline#extensions#tabline#enabled = 1
@@ -181,15 +160,15 @@ let g:startify_bookmarks = [ {'v': '~/.vimrc'} ]
 let g:startify_session_autoload = 1
 
 let g:startify_list_order = [
-      \ ['   LRU:'],
-      \ 'files',
-      \ ['   LRU within this dir:'],
-      \ 'dir',
-      \ ['   Sessions:'],
-      \ 'sessions',
-      \ ['   Bookmarks:'],
-      \ 'bookmarks',
-      \ ]
+			\ ['   LRU:'],
+			\ 'files',
+			\ ['   LRU within this dir:'],
+			\ 'dir',
+			\ ['   Sessions:'],
+			\ 'sessions',
+			\ ['   Bookmarks:'],
+			\ 'bookmarks',
+			\ ]
 
 "GoldenVIew
 let g:goldenview__enable_default_mapping = 0
@@ -210,25 +189,24 @@ nmap <silent> <Leader>P  <Plug>GoldenViewPrevious
 let $s='~/.vim/session/'
 let $rc='~/.vimrc'
 
-"elmcast
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:elm_syntastic_show_warnings = 1
-
-let g:ycm_semantic_triggers = {
-     \ 'elm' : ['.'],
-     \}
-
-let g:elm_jump_to_error = 0
-let g:elm_make_output_file = "elm.js"
-let g:elm_make_show_warnings = 0
-let g:elm_syntastic_show_warnings = 0
-let g:elm_browser_command = ""
-let g:elm_detailed_complete = 0
-let g:elm_format_autosave = 0
-let g:elm_classic_hightlighting = 0
-let g:elm_setup_keybindings = 0
-
+"""elmcast
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:elm_syntastic_show_warnings = 1
+"
+"let g:ycm_semantic_triggers = {
+"			\ 'elm' : ['.'],
+"			\}
+"
+"let g:elm_jump_to_error = 0
+"let g:elm_make_output_file = "elm.js"
+"let g:elm_make_show_warnings = 0
+"let g:elm_syntastic_show_warnings = 0
+"let g:elm_browser_command = ""
+"let g:elm_detailed_complete = 0
+"let g:elm_format_autosave = 0
+"let g:elm_classic_hightlighting = 0
+"let g:elm_setup_keybindings = 0
 
 "Calls `elm make` for the current file
 "Calls `elm make` with Main.elm
@@ -238,24 +216,26 @@ let g:elm_setup_keybindings = 0
 "Queries `elm oracle` and shows the docs for the word under the cursor.
 "Queries `elm oracle` and browses the docs for the word under the cursor.
 
-nmap <silent> <Leader>me  <Plug>(elm-make)
-nmap <silent> <Leader>ma  <Plug>(elm-make-main)
-nmap <silent> <Leader>er  <Plug>(elm-repl)
-nmap <silent> <Leader>rr  <Plug>(elm-error-detail)
-nmap <silent> <Leader>bd  <Plug>(elm-browse-docs)
-nmap <silent> <Leader>br  <Plug>(elm-show-docs)
+"nmap <silent> <Leader>me  <Plug>(elm-make)
+"nmap <silent> <Leader>ma  <Plug>(elm-make-main)
+"nmap <silent> <Leader>er  <Plug>(elm-repl)
+"nmap <silent> <Leader>rr  <Plug>(elm-error-detail)
+"nmap <silent> <Leader>bd  <Plug>(elm-browse-docs)
+"nmap <silent> <Leader>br  <Plug>(elm-show-docs)
 
-"bookmark Autoclose
-let g:bookmark_auto_close = 1
-nmap <Leader><Leader>m <Plug>BookmarkToggle
-nmap <Leader>i <Plug>BookmarkAnnotate
-nmap <Leader>a <Plug>BookmarkShowAll
-nmap <Leader>j <Plug>BookmarkNext
-nmap <Leader>k <Plug>BookmarkPrev
-nmap <Leader>c <Plug>BookmarkClear
-nmap <Leader>x <Plug>BookmarkClearAll
-nmap <Leader>kk <Plug>BookmarkMoveUp
-nmap <Leader>jj <Plug>BookmarkMoveDown
+"Fugitive
+"rebind my favorite commands from Git.vim for Fugitive
+nmap <leader>gs :Gstatus<cr>
+nmap <leader>gc :Gcommit<cr>
+nmap <leader>gp :Gpush<cr>
+nmap <leader>gP :Gpull<cr>
 
-let g:bookmark_no_default_key_mappings = 1
+"PhpComplete
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
+"autoclosetags
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.blade.php"
+
+"Folding automatic
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
