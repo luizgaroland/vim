@@ -39,17 +39,6 @@ Bundle 'zhaocai/GoldenView.Vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 
 "leader key
 let mapleader = " "
@@ -75,13 +64,17 @@ endif
 
 "4 space tab
 set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
-
 "colorScheme
 syntax enable
 set t_Co=256
 let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 set background=dark
+
+if &term =~ '256color'
+	" disable Background Color Erase (BCE)
+	set t_ut=
+endif
 
 " Open nerdtree if no file specified
 "autocmd StdinReadPre * let s:std_in=1
@@ -128,7 +121,11 @@ call NERDTreeHighlightFile('py', 'green', 'none', 'green', '#151515')
 call NERDTreeHighlightFile('pyc', 'Magenta', 'none', '#ff00ff', '#151515')
 
 "YouCompleteme
-let g:ycm_autoclose_preview_window_after_completion = 1
+set completeopt-=preview
+"let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+
 " Setup some default ignores
 let g:ctrlp_custom_ignore = {
 			\ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
@@ -140,15 +137,15 @@ let g:ctrlp_custom_ignore = {
 " control. It also supports works with .svn, .hg, .bzr.
 let g:ctrlp_working_path_mode = 'r'
 
-"""syntastic
-""set statusline+=%#warningmsg#
-""set statusline+=%{SyntasticStatuslineFlag()}
-""set statusline+=%*
-""
-""let g:syntastic_always_populate_loc_list = 1
-""let g:syntastic_auto_loc_list = 1
-""let g:syntastic_check_on_open = 1
-""let g:syntastic_check_on_wq = 0
+"syntastic
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 "AirLine
 let g:airline#extensions#tabline#enabled = 1
@@ -235,7 +232,3 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
 "autoclosetags
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.blade.php"
-
-"Folding automatic
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
