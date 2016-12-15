@@ -14,19 +14,14 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " Git plugin not hosted on GitHub
 Plugin 'scrooloose/nerdtree'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'mhinz/vim-startify'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'morhetz/gruvbox'
-Plugin 'elmcast/elm-vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'jwalton512/vim-blade'
 Plugin 'alvan/vim-closetag'
 Plugin 'klen/python-mode.git'
-Plugin 'vim-scripts/vim-auto-save'
 Plugin 'tpope/vim-fugitive'
 Plugin 'myusuf3/numbers.vim'
 Plugin 'tpope/vim-surround'
@@ -34,11 +29,20 @@ Plugin 'tpope/vim-repeat'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'wellle/targets.vim'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'ajh17/VimCompletesMe.git'
+Plugin 'ternjs/tern_for_vim'
+Plugin 'vim-scripts/vim-auto-save'
 Bundle 'zhaocai/GoldenView.Vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+"vim Completion
+set omnifunc=syntaxcomplete#Complete
+set completeopt-=preview
 
 "leader key
 let mapleader = " "
@@ -76,17 +80,8 @@ if &term =~ '256color'
 	set t_ut=
 endif
 
-" Open nerdtree if no file specified
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | "endif
-
 "NerdTreeHotkey
 map <C-e> :NERDTreeToggle<CR>
-" nmap <silent> <Leader>[ :call g:WorkaroundNERDTreeToggle()<CR>
-"
-"function! g:WorkaroundNERDTreeToggle()
-" try | NERDTreeToggle | catch | silent! NERDTree | endtry
-" endfunction
 
 "splits remap
 nnoremap <C-J> <C-W><C-J>
@@ -120,12 +115,6 @@ call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 call NERDTreeHighlightFile('py', 'green', 'none', 'green', '#151515')
 call NERDTreeHighlightFile('pyc', 'Magenta', 'none', '#ff00ff', '#151515')
 
-"YouCompleteme
-set completeopt-=preview
-"let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-
 " Setup some default ignores
 let g:ctrlp_custom_ignore = {
 			\ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
@@ -136,20 +125,6 @@ let g:ctrlp_custom_ignore = {
 " This makes a lot of sense if you are working on a project that is in version
 " control. It also supports works with .svn, .hg, .bzr.
 let g:ctrlp_working_path_mode = 'r'
-
-"syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-
-"AirLine
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'long']
 
 "Startfy config
 autocmd User Startified setlocal cursorline
@@ -186,40 +161,6 @@ nmap <silent> <Leader>P  <Plug>GoldenViewPrevious
 let $s='~/.vim/session/'
 let $rc='~/.vimrc'
 
-"""elmcast
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:elm_syntastic_show_warnings = 1
-"
-"let g:ycm_semantic_triggers = {
-"			\ 'elm' : ['.'],
-"			\}
-"
-"let g:elm_jump_to_error = 0
-"let g:elm_make_output_file = "elm.js"
-"let g:elm_make_show_warnings = 0
-"let g:elm_syntastic_show_warnings = 0
-"let g:elm_browser_command = ""
-"let g:elm_detailed_complete = 0
-"let g:elm_format_autosave = 0
-"let g:elm_classic_hightlighting = 0
-"let g:elm_setup_keybindings = 0
-
-"Calls `elm make` for the current file
-"Calls `elm make` with Main.elm
-"Calls `elm test` with Test[filename].elm
-"Calls `elm repl` in a subprocess
-"Shows the detail of the current error.
-"Queries `elm oracle` and shows the docs for the word under the cursor.
-"Queries `elm oracle` and browses the docs for the word under the cursor.
-
-"nmap <silent> <Leader>me  <Plug>(elm-make)
-"nmap <silent> <Leader>ma  <Plug>(elm-make-main)
-"nmap <silent> <Leader>er  <Plug>(elm-repl)
-"nmap <silent> <Leader>rr  <Plug>(elm-error-detail)
-"nmap <silent> <Leader>bd  <Plug>(elm-browse-docs)
-"nmap <silent> <Leader>br  <Plug>(elm-show-docs)
-
 "Fugitive
 "rebind my favorite commands from Git.vim for Fugitive
 nmap <leader>gs :Gstatus<cr>
@@ -230,5 +171,11 @@ nmap <leader>gP :Gpull<cr>
 "PhpComplete
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
+"JS complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+
 "autoclosetags
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.blade.php"
+
+"autosave
+let g:auto_save = 1
