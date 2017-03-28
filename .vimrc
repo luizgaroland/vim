@@ -13,7 +13,6 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " Git plugin not hosted on GitHub
-Plugin 'scrooloose/nerdtree'
 Plugin 'mhinz/vim-startify'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -58,7 +57,7 @@ filetype plugin on
 runtime macros/matchit.vim
 let b:match_debug = 1
 
-"No menu bar gvim
+"No menu bar if gvim
 if has("gui_running")
 	set guioptions -=T
 	set guioptions-=r  "remove right-hand scroll bar
@@ -69,6 +68,7 @@ endif
 
 "4 space tab
 set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
+
 "colorScheme
 syntax enable
 set t_Co=256
@@ -82,9 +82,6 @@ if &term =~ '256color'
 	set t_ut=
 endif
 
-"NerdTreeHotkey
-map <C-e> :NERDTreeToggle<CR>
-
 "splits remap
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -94,28 +91,6 @@ nnoremap <C-H> <C-W><C-H>
 "split opening
 set splitbelow
 set splitright
-
-" NERDTress File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-	exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-	exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-endfunction
-
-call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
-call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
-call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
-call NERDTreeHighlightFile('py', 'green', 'none', 'green', '#151515')
-call NERDTreeHighlightFile('pyc', 'Magenta', 'none', '#ff00ff', '#151515')
 
 " Setup some default ignores
 let g:ctrlp_custom_ignore = {
@@ -176,5 +151,5 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.blade.php"
 "autosave
 let g:auto_save = 1
 
-"serach selected
+"search selected
 vnoremap // y/<C-R>"<CR>
