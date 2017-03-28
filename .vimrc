@@ -34,6 +34,8 @@ Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'ajh17/VimCompletesMe.git'
 Plugin 'ternjs/tern_for_vim'
 Plugin 'vim-scripts/vim-auto-save'
+Plugin 'mattn/emmet-vim'
+Plugin '2072/PHP-Indenting-for-VIm'
 Bundle 'zhaocai/GoldenView.Vim'
 
 " All of your Plugins must be added before the following line
@@ -41,7 +43,6 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 "vim Completion
-set omnifunc=syntaxcomplete#Complete
 set completeopt-=preview
 
 "leader key
@@ -59,11 +60,11 @@ let b:match_debug = 1
 
 "No menu bar gvim
 if has("gui_running")
-	set guifont=Monaco:h13
-	set guioptions -=m
 	set guioptions -=T
 	set guioptions-=r  "remove right-hand scroll bar
 	set guioptions-=L  "remove left-hand scroll bar
+	set guiheadroom=0
+	set guioptions-=e
 endif
 
 "4 space tab
@@ -74,6 +75,7 @@ set t_Co=256
 let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 set background=dark
+set guifont=Monaco\ 13
 
 if &term =~ '256color'
 	" disable Background Color Erase (BCE)
@@ -168,14 +170,11 @@ nmap <leader>gc :Gcommit<cr>
 nmap <leader>gp :Gpush<cr>
 nmap <leader>gP :Gpull<cr>
 
-"PhpComplete
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-
-"JS complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-
 "autoclosetags
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.blade.php"
 
 "autosave
 let g:auto_save = 1
+
+"serach selected
+vnoremap // y/<C-R>"<CR>
