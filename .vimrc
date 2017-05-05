@@ -1,4 +1,3 @@
-set nocompatible " be iMproved, required
 filetype off " required
 
 " set the runtime path to include Vundle and initialize
@@ -13,36 +12,48 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " Git plugin not hosted on GitHub
+"Essential
+Plugin 'alvan/vim-closetag'
+Plugin 'myusuf3/numbers.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 Plugin 'mhinz/vim-startify'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'jwalton512/vim-blade'
-Plugin 'alvan/vim-closetag'
-Plugin 'klen/python-mode.git'
-Plugin 'tpope/vim-fugitive'
-Plugin 'myusuf3/numbers.vim'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'wellle/targets.vim'
-Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'ajh17/VimCompletesMe.git'
-Plugin 'ternjs/tern_for_vim'
 Plugin 'vim-scripts/vim-auto-save'
-Plugin 'mattn/emmet-vim'
-Plugin '2072/PHP-Indenting-for-VIm'
+Plugin 'maralla/completor.vim'
+Plugin 'kana/vim-textobj-user'
+Plugin 'kana/vim-textobj-indent'
+Plugin 'kshenoy/vim-signature'
 Bundle 'zhaocai/GoldenView.Vim'
+
+"HTML
+Plugin 'mattn/emmet-vim'
+
+"GIT
+Plugin 'tpope/vim-fugitive'
+
+"PHP
+Plugin 'jwalton512/vim-blade'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin '2072/PHP-Indenting-for-VIm'
+Plugin 'shawncplus/phpcomplete.vim'
+
+"PYTHON
+"Plugin 'klen/python-mode.git'
+
+"JAVASCRIPT
+Plugin 'ternjs/tern_for_vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-
-"vim Completion
-set completeopt-=preview
 
 "leader key
 let mapleader = " "
@@ -55,9 +66,8 @@ set cc=80
 set nocompatible
 filetype plugin on
 runtime macros/matchit.vim
-let b:match_debug = 1
 
-"No menu bar if gvim
+"if Gvim
 if has("gui_running")
 	set guioptions -=T
 	set guioptions-=r  "remove right-hand scroll bar
@@ -70,11 +80,10 @@ endif
 set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
 
 "colorScheme
-syntax enable
-set t_Co=256
-let g:gruvbox_contrast_dark = 'hard'
-colorscheme gruvbox
 set background=dark
+colorscheme gruvbox
+syntax enable
+let g:gruvbox_contrast_dark = 'hard'
 set guifont=Monaco\ 13
 
 if &term =~ '256color'
@@ -153,3 +162,40 @@ let g:auto_save = 1
 
 "search selected
 vnoremap // y/<C-R>"<CR>
+
+"completion options PHP
+let g:phpcomplete_parse_docblock_comments = 1
+let g:phpcomplete_enhance_jump_to_definition = 1
+
+"Completion Function
+function! FzfCompletionPop(findstart, base)
+  let l:res = completor#completefunc(a:findstart, a:base)
+
+  if a:findstart:q
+    return l:res
+  endif
+
+  let l:words = []
+
+  for word in l:res.words
+    call add(l:words, word['word'] . ' ' . word['menu'])
+  endfor
+
+  let l:result = fzf#run({ 'source': l:words, 'down': '~40%', 'options': printf('--query "%s" +s', a:base) })
+
+  if empty(l:result)
+    return [ a:base ]
+  endif
+
+  return [ split(l:result[0])[0] ]
+endfunction
+
+"Completion
+set completefunc=FzfCompletionPop
+set completeopt=menu
+
+"nvim terminal mode exit
+tnoremap <Esc> <C-\><C-n>
+
+"Remove hl search
+set nohlsearch
