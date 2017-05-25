@@ -1,5 +1,4 @@
-filetype off " required
-
+filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -13,14 +12,14 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " Git plugin not hosted on GitHub
 "Essential
+Plugin 'morhetz/gruvbox'
+Plugin 'mhinz/vim-startify'
 Plugin 'alvan/vim-closetag'
 Plugin 'myusuf3/numbers.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
-Plugin 'mhinz/vim-startify'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'morhetz/gruvbox'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'jiangmiao/auto-pairs'
@@ -28,25 +27,28 @@ Plugin 'wellle/targets.vim'
 Plugin 'ajh17/VimCompletesMe.git'
 Plugin 'vim-scripts/vim-auto-save'
 Plugin 'maralla/completor.vim'
-Plugin 'kana/vim-textobj-user'
-Plugin 'kana/vim-textobj-indent'
 Plugin 'kshenoy/vim-signature'
+Plugin 'ludovicchabant/vim-gutentags'
 Bundle 'zhaocai/GoldenView.Vim'
+
+"Snippets
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 "HTML
 Plugin 'mattn/emmet-vim'
-
-"GIT
+"
+""GIT
 Plugin 'tpope/vim-fugitive'
-
-"PHP
-Plugin 'jwalton512/vim-blade'
-Plugin 'ludovicchabant/vim-gutentags'
+"
+""PHP
 Plugin '2072/PHP-Indenting-for-VIm'
 Plugin 'shawncplus/phpcomplete.vim'
 
 "PYTHON
 "Plugin 'klen/python-mode.git'
+"Plugin 'kana/vim-textobj-user'
+"Plugin 'kana/vim-textobj-indent'
 
 "JAVASCRIPT
 Plugin 'ternjs/tern_for_vim'
@@ -83,7 +85,6 @@ set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
 set background=dark
 colorscheme gruvbox
 syntax enable
-let g:gruvbox_contrast_dark = 'hard'
 set guifont=Monaco\ 13
 
 if &term =~ '256color'
@@ -199,3 +200,11 @@ tnoremap <Esc> <C-\><C-n>
 
 "Remove hl search
 set nohlsearch
+
+"UtilSnips
+let g:UltiSnipsExpandTrigger="<S-tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
