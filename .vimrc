@@ -26,10 +26,11 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'wellle/targets.vim'
 Plugin 'ajh17/VimCompletesMe.git'
 Plugin 'vim-scripts/vim-auto-save'
-Plugin 'maralla/completor.vim'
 Plugin 'kshenoy/vim-signature'
 Plugin 'ludovicchabant/vim-gutentags'
-Bundle 'zhaocai/GoldenView.Vim'
+Plugin 'maralla/completor.vim'
+Plugin 'zhaocai/GoldenView.Vim'
+Plugin 'junegunn/fzf'
 
 "Snippets
 Plugin 'SirVer/ultisnips'
@@ -42,8 +43,11 @@ Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-fugitive'
 "
 ""PHP
-Plugin '2072/PHP-Indenting-for-VIm'
-Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'm2mdas/phpcomplete-extended'
+Bundle 'm2mdas/phpcomplete-extended-laravel'
+Plugin 'Shougo/vimproc'
+Plugin 'Shougo/unite.vim'
+"Plugin 'shawncplus/phpcomplete.vim'
 
 "PYTHON
 "Plugin 'klen/python-mode.git'
@@ -79,7 +83,7 @@ if has("gui_running")
 endif
 
 "4 space tab
-set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
+set tabstop=4 softtabstop=0 shiftwidth=4 expandtab
 
 "colorScheme
 set background=dark
@@ -140,10 +144,6 @@ nmap <silent> <Leader>w= <Plug>GoldenViewSplit
 nmap <silent> <Leader>[   <Plug>GoldenViewSwitchMain
 nmap <silent> <Leader>[[  <Plug>GoldenViewSwitchToggle
 
-" 3. jump to next and previous window
-nmap <silent> <Leader>N  <Plug>GoldenViewNext
-nmap <silent> <Leader>P  <Plug>GoldenViewPrevious
-
 "Path constants
 let $s='~/.vim/session/'
 let $rc='~/.vimrc'
@@ -168,38 +168,51 @@ vnoremap // y/<C-R>"<CR>
 let g:phpcomplete_parse_docblock_comments = 1
 let g:phpcomplete_enhance_jump_to_definition = 1
 
-"Completion Function
-function! FzfCompletionPop(findstart, base)
-  let l:res = completor#completefunc(a:findstart, a:base)
+""Completion Function
+let g:fuzzyfunc = 'completor#completefunc'
 
-  if a:findstart:q
-    return l:res
+function! FuzzyCompleteFunc(findstart, base)
+  let Func = function(get(g:, 'fuzzyfunc', &omnifunc))
+  let results = Func(a:findstart, a:base)
+
+  if a:findstart
+	return results
   endif
 
-  let l:words = []
-
-  for word in l:res.words
-    call add(l:words, word['word'] . ' ' . word['menu'])
-  endfor
-
-  let l:result = fzf#run({ 'source': l:words, 'down': '~40%', 'options': printf('--query "%s" +s', a:base) })
-
-  if empty(l:result)
-    return [ a:base ]
+  if type(results) == type({}) && has_key(results, 'words')
+	let l:words = []
+	for result in results.words
+	  call add(words, result.word . ' ' . result.menu)
+	endfor
+  elseif len(results)
+	let l:words = results
   endif
 
-  return [ split(l:result[0])[0] ]
+  if len(l:words)
+	let result = fzf#run({ 'source': l:words, 'down': '~40%', 'options': printf('--query "%s" +s', a:base) })
+
+	if empty(result)
+	  return [ a:base ]
+	endif
+
+	return [ split(result[0])[0] ]
+  else
+	return [ a:base ]
+  endif
 endfunction
 
-"Completion
-set completefunc=FzfCompletionPop
+""Completion
+set completefunc=FuzzyCompleteFunc
 set completeopt=menu
 
-"nvim terminal mode exit
-tnoremap <Esc> <C-\><C-n>
+"Nvim options
+if exists('+guioptions')
+	"Remove hl search
+	set nohlsearch
+	"nvim terminal mode exit
+	tnoremap <Esc> <C-\><C-n>
+endif
 
-"Remove hl search
-set nohlsearch
 
 "UtilSnips
 let g:UltiSnipsExpandTrigger="<S-tab>"
@@ -208,3 +221,11 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+
+"Move Macro
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
