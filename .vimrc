@@ -42,11 +42,12 @@ Plugin 'mattn/emmet-vim'
 ""GIT
 Plugin 'tpope/vim-fugitive'
 "
-""PHP
-Plugin 'm2mdas/phpcomplete-extended'
-Bundle 'm2mdas/phpcomplete-extended-laravel'
-Plugin 'Shougo/vimproc'
-Plugin 'Shougo/unite.vim'
+"PHP
+Plugin 'lvht/phpcd.vim'
+"Plugin 'm2mdas/phpcomplete-extended'
+"Bundle 'm2mdas/phpcomplete-extended-laravel'
+"Plugin 'Shougo/vimproc'
+"Plugin 'Shougo/unite.vim'
 "Plugin 'shawncplus/phpcomplete.vim'
 
 "PYTHON
@@ -164,9 +165,9 @@ let g:auto_save = 1
 "search selected
 vnoremap // y/<C-R>"<CR>
 
-"completion options PHP
-let g:phpcomplete_parse_docblock_comments = 1
-let g:phpcomplete_enhance_jump_to_definition = 1
+""completion options PHP
+"let g:phpcomplete_parse_docblock_comments = 1
+"let g:phpcomplete_enhance_jump_to_definition = 1
 
 ""Completion Function
 let g:fuzzyfunc = 'completor#completefunc'
@@ -176,28 +177,28 @@ function! FuzzyCompleteFunc(findstart, base)
   let results = Func(a:findstart, a:base)
 
   if a:findstart
-	return results
+    return results
   endif
 
   if type(results) == type({}) && has_key(results, 'words')
-	let l:words = []
-	for result in results.words
-	  call add(words, result.word . ' ' . result.menu)
-	endfor
+    let l:words = []
+    for result in results.words
+      call add(words, result.word . ' ' . result.menu)
+    endfor
   elseif len(results)
-	let l:words = results
+    let l:words = results
   endif
 
   if len(l:words)
-	let result = fzf#run({ 'source': l:words, 'down': '~40%', 'options': printf('--query "%s" +s', a:base) })
+    let result = fzf#run({ 'source': l:words, 'down': '~40%', 'options': printf('--query "%s" +s', a:base) })
 
-	if empty(result)
-	  return [ a:base ]
-	endif
+    if empty(result)
+      return [ a:base ]
+    endif
 
-	return [ split(result[0])[0] ]
+    return [ split(result[0])[0] ]
   else
-	return [ a:base ]
+    return [ a:base ]
   endif
 endfunction
 
@@ -206,11 +207,12 @@ set completefunc=FuzzyCompleteFunc
 set completeopt=menu
 
 "Nvim options
-if exists('+guioptions')
-	"Remove hl search
-	set nohlsearch
+if has('nvim')
 	"nvim terminal mode exit
 	tnoremap <Esc> <C-\><C-n>
+
+    "Remove hl search
+    set nohlsearch
 endif
 
 
