@@ -38,17 +38,16 @@ Plugin 'honza/vim-snippets'
 
 "HTML
 Plugin 'mattn/emmet-vim'
-"
-""GIT
+
+"GIT
 Plugin 'tpope/vim-fugitive'
-"
+
 "PHP
-Plugin 'lvht/phpcd.vim'
-"Plugin 'm2mdas/phpcomplete-extended'
-"Bundle 'm2mdas/phpcomplete-extended-laravel'
-"Plugin 'Shougo/vimproc'
-"Plugin 'Shougo/unite.vim'
-"Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'm2mdas/phpcomplete-extended'
+Plugin 'm2mdas/phpcomplete-extended-laravel'
+Plugin 'Shougo/vimproc'
+Plugin 'Shougo/unite.vim'
+Plugin 'shawncplus/phpcomplete.vim'
 
 "PYTHON
 "Plugin 'klen/python-mode.git'
@@ -165,45 +164,45 @@ let g:auto_save = 1
 "search selected
 vnoremap // y/<C-R>"<CR>
 
-""completion options PHP
-"let g:phpcomplete_parse_docblock_comments = 1
-"let g:phpcomplete_enhance_jump_to_definition = 1
+"completion options PHP
+let g:phpcomplete_parse_docblock_comments = 1
+let g:phpcomplete_enhance_jump_to_definition = 1
 
 ""Completion Function
-let g:fuzzyfunc = 'completor#completefunc'
+"let g:fuzzyfunc = 'completor#completefunc'
 
-function! FuzzyCompleteFunc(findstart, base)
-  let Func = function(get(g:, 'fuzzyfunc', &omnifunc))
-  let results = Func(a:findstart, a:base)
+"function! FuzzyCompleteFunc(findstart, base)
+  "let Func = function(get(g:, 'fuzzyfunc', &omnifunc))
+  "let results = Func(a:findstart, a:base)
 
-  if a:findstart
-    return results
-  endif
+  "if a:findstart
+    "return results
+  "endif
 
-  if type(results) == type({}) && has_key(results, 'words')
-    let l:words = []
-    for result in results.words
-      call add(words, result.word . ' ' . result.menu)
-    endfor
-  elseif len(results)
-    let l:words = results
-  endif
+  "if type(results) == type({}) && has_key(results, 'words')
+    "let l:words = []
+    "for result in results.words
+      "call add(words, result.word . ' ' . result.menu)
+    "endfor
+  "elseif len(results)
+    "let l:words = results
+  "endif
 
-  if len(l:words)
-    let result = fzf#run({ 'source': l:words, 'down': '~40%', 'options': printf('--query "%s" +s', a:base) })
+  "if len(l:words)
+    "let result = fzf#run({ 'source': l:words, 'down': '~40%', 'options': printf('--query "%s" +s', a:base) })
 
-    if empty(result)
-      return [ a:base ]
-    endif
+    "if empty(result)
+      "return [ a:base ]
+    "endif
 
-    return [ split(result[0])[0] ]
-  else
-    return [ a:base ]
-  endif
-endfunction
+    "return [ split(result[0])[0] ]
+  "else
+    "return [ a:base ]
+  "endif
+"endfunction
 
 ""Completion
-set completefunc=FuzzyCompleteFunc
+"set completefunc=FuzzyCompleteFunc
 set completeopt=menu
 
 "Nvim options
@@ -231,3 +230,7 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+
+"Better j and k
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
