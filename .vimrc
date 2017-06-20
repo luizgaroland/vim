@@ -30,7 +30,7 @@ Plugin 'kshenoy/vim-signature'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'maralla/completor.vim'
 Plugin 'zhaocai/GoldenView.Vim'
-Plugin 'junegunn/fzf'
+Plugin 'majutsushi/tagbar'
 
 "Snippets
 Plugin 'SirVer/ultisnips'
@@ -43,11 +43,8 @@ Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-fugitive'
 
 "PHP
-Plugin 'm2mdas/phpcomplete-extended'
-Plugin 'm2mdas/phpcomplete-extended-laravel'
-Plugin 'Shougo/vimproc'
-Plugin 'Shougo/unite.vim'
 Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'jwalton512/vim-blade'
 
 "PYTHON
 "Plugin 'klen/python-mode.git'
@@ -168,41 +165,7 @@ vnoremap // y/<C-R>"<CR>
 let g:phpcomplete_parse_docblock_comments = 1
 let g:phpcomplete_enhance_jump_to_definition = 1
 
-""Completion Function
-"let g:fuzzyfunc = 'completor#completefunc'
-
-"function! FuzzyCompleteFunc(findstart, base)
-  "let Func = function(get(g:, 'fuzzyfunc', &omnifunc))
-  "let results = Func(a:findstart, a:base)
-
-  "if a:findstart
-    "return results
-  "endif
-
-  "if type(results) == type({}) && has_key(results, 'words')
-    "let l:words = []
-    "for result in results.words
-      "call add(words, result.word . ' ' . result.menu)
-    "endfor
-  "elseif len(results)
-    "let l:words = results
-  "endif
-
-  "if len(l:words)
-    "let result = fzf#run({ 'source': l:words, 'down': '~40%', 'options': printf('--query "%s" +s', a:base) })
-
-    "if empty(result)
-      "return [ a:base ]
-    "endif
-
-    "return [ split(result[0])[0] ]
-  "else
-    "return [ a:base ]
-  "endif
-"endfunction
-
-""Completion
-"set completefunc=FuzzyCompleteFunc
+"Completion
 set completeopt=menu
 
 "Nvim options
@@ -213,7 +176,6 @@ if has('nvim')
     "Remove hl search
     set nohlsearch
 endif
-
 
 "UtilSnips
 let g:UltiSnipsExpandTrigger="<S-tab>"
@@ -234,3 +196,21 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 "Better j and k
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
+
+"Increment Column number
+fu! Incr()
+    let a = line('.') - line("'<")
+    let c = virtcol("'<")
+    if a > 0
+        execute 'normal! '.c.'|'.a."\<C-a>"
+    endif
+    normal `<
+endfu
+
+vnoremap <C-a> :call Incr()<CR>
+
+"gutentags
+let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.blade.php']
+
+"TagBar
+nmap <Leader>m :TagbarToggle<CR>
