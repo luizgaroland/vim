@@ -79,6 +79,15 @@ if has("gui_running")
 	set guioptions-=e
 endif
 
+"Nvim options
+if has('nvim')
+	"nvim terminal mode exit
+	tnoremap <Esc> <C-\><C-n>
+
+    "Remove hl search
+    set nohlsearch
+endif
+
 "4 space tab
 set tabstop=4 softtabstop=0 shiftwidth=4 expandtab
 
@@ -161,21 +170,8 @@ let g:auto_save = 1
 "search selected
 vnoremap // y/<C-R>"<CR>
 
-"completion options PHP
-let g:phpcomplete_parse_docblock_comments = 1
-let g:phpcomplete_enhance_jump_to_definition = 1
-
 "Completion
 set completeopt=menu
-
-"Nvim options
-if has('nvim')
-	"nvim terminal mode exit
-	tnoremap <Esc> <C-\><C-n>
-
-    "Remove hl search
-    set nohlsearch
-endif
 
 "UtilSnips
 let g:UltiSnipsExpandTrigger="<S-tab>"
@@ -210,7 +206,17 @@ endfu
 vnoremap <C-a> :call Incr()<CR>
 
 "gutentags
-let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.blade.php']
+let g:gutentags_ctags_executable = 'phpctags.phar'
+let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
+                            \ '*.phar', '*.ini', '*.rst', '*.md',
+                            \ '*vendor/*/test*', '*vendor/*/Test*',
+                            \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
+                            \ '*var/cache*', '*var/log*', '*.blade.php']
 
 "TagBar
 nmap <Leader>m :TagbarToggle<CR>
+
+"completion options PHP
+let g:phpcomplete_parse_docblock_comments = 1
+let g:phpcomplete_enhance_jump_to_definition = 1
+
