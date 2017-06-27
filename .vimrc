@@ -14,8 +14,8 @@ Plugin 'VundleVim/Vundle.vim'
 "Essential
 Plugin 'morhetz/gruvbox'
 Plugin 'mhinz/vim-startify'
-Plugin 'alvan/vim-closetag'
 Plugin 'myusuf3/numbers.vim'
+Plugin 'wellle/targets.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'ntpeters/vim-better-whitespace'
@@ -23,7 +23,6 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'wellle/targets.vim'
 Plugin 'ajh17/VimCompletesMe.git'
 Plugin 'vim-scripts/vim-auto-save'
 Plugin 'kshenoy/vim-signature'
@@ -38,6 +37,7 @@ Plugin 'honza/vim-snippets'
 
 "HTML
 Plugin 'mattn/emmet-vim'
+Plugin 'alvan/vim-closetag'
 
 "GIT
 Plugin 'tpope/vim-fugitive'
@@ -206,12 +206,10 @@ endfu
 vnoremap <C-a> :call Incr()<CR>
 
 "gutentags
-let g:gutentags_ctags_executable = 'phpctags.phar'
-let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
-                            \ '*.phar', '*.ini', '*.rst', '*.md',
-                            \ '*vendor/*/test*', '*vendor/*/Test*',
-                            \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
-                            \ '*var/cache*', '*var/log*', '*.blade.php']
+let g:gutentags_ctags_executable = 'ctags'
+let g:gutentags_ctags_exclude = ['*.json', '*.xml',
+                            \  '*.ini', '*.rst', '*.md',
+                            \ '*var/cache*', '*var/log*', ]
 
 "TagBar
 nmap <Leader>m :TagbarToggle<CR>
