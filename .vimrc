@@ -13,38 +13,43 @@ Plugin 'VundleVim/Vundle.vim'
 " Git plugin not hosted on GitHub
 "Essential
 Plugin 'morhetz/gruvbox'
+Plugin 'tpope/vim-surround'
+Plugin 'wellle/targets.vim'
+Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'myusuf3/numbers.vim'
-Plugin 'wellle/targets.vim'
-Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'sheerun/vim-polyglot'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'ajh17/VimCompletesMe.git'
 Plugin 'vim-scripts/vim-auto-save'
-Plugin 'kshenoy/vim-signature'
-Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'maralla/completor.vim'
-Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'Yggdroot/indentLine'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'ajh17/VimCompletesMe.git'
+Plugin 'maralla/completor.vim'
+Plugin 'sheerun/vim-polyglot'
 
 "Snippets
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+"Plugin 'SirVer/ultisnips'
+"Plugin 'honza/vim-snippets'
 
 "HTML
-Plugin 'mattn/emmet-vim'
-Plugin 'alvan/vim-closetag'
+"Plugin 'mattn/emmet-vim'
+"Plugin 'alvan/vim-closetag'
+
+"Stylus
+"Plugin 'wavded/vim-stylus'
 
 "GIT
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
+
+"CSS
+Plugin 'lilydjwg/colorizer'
+Plugin 'hail2u/vim-css3-syntax'
 
 "PHP
 Plugin 'shawncplus/phpcomplete.vim'
-Plugin 'jwalton512/vim-blade'
 
 "PYTHON
 "Plugin 'klen/python-mode.git'
@@ -52,7 +57,7 @@ Plugin 'jwalton512/vim-blade'
 "Plugin 'kana/vim-textobj-indent'
 
 "JAVASCRIPT
-Plugin 'ternjs/tern_for_vim'
+"Plugin 'ternjs/tern_for_vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -72,17 +77,17 @@ runtime macros/matchit.vim
 
 "if Gvim
 if has("gui_running")
-	set guioptions -=T
-	set guioptions-=r  "remove right-hand scroll bar
-	set guioptions-=L  "remove left-hand scroll bar
-	set guiheadroom=0
-	set guioptions-=e
+    set guioptions -=T
+    set guioptions-=r  "remove right-hand scroll bar
+    set guioptions-=L  "remove left-hand scroll bar
+    set guiheadroom=0
+    set guioptions-=e
 endif
 
 "Nvim options
 if has('nvim')
-	"nvim terminal mode exit
-	tnoremap <Esc> <C-\><C-n>
+    "nvim terminal mode exit
+    tnoremap <Esc> <C-\><C-n>
 
     "Remove hl search
     set nohlsearch
@@ -98,8 +103,8 @@ syntax enable
 set guifont=Monaco\ 13
 
 if &term =~ '256color'
-	" disable Background Color Erase (BCE)
-	set t_ut=
+    " disable Background Color Erase (BCE)
+    set t_ut=
 endif
 
 "splits remap
@@ -114,9 +119,9 @@ set splitright
 
 " Setup some default ignores
 let g:ctrlp_custom_ignore = {
-			\ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
-			\ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-			\}
+            \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+            \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+            \}
 
 " Use the nearest .git directory as the cwd
 " This makes a lot of sense if you are working on a project that is in version
@@ -129,17 +134,17 @@ let g:startify_bookmarks = [ {'v': '~/.vimrc'} ]
 let g:startify_session_autoload = 1
 
 let g:startify_list_order = [
-			\ ['   LRU:'],
-			\ 'files',
-			\ ['   LRU within this dir:'],
-			\ 'dir',
-			\ ['   Sessions:'],
-			\ 'sessions',
-			\ ['   Bookmarks:'],
-			\ 'bookmarks',
-			\ ]
+            \ ['   LRU:'],
+            \ 'files',
+            \ ['   LRU within this dir:'],
+            \ 'dir',
+            \ ['   Sessions:'],
+            \ 'sessions',
+            \ ['   Bookmarks:'],
+            \ 'bookmarks',
+            \ ]
 
-"GoldenVIew
+"GoldenView
 let g:goldenview__enable_default_mapping = 0
 
 " 1. split to tiled windows
@@ -174,12 +179,12 @@ vnoremap // y/<C-R>"<CR>
 set completeopt=menu
 
 "UtilSnips
-let g:UltiSnipsExpandTrigger="<S-tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsExpandTrigger="<S-tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"
+"" If you want :UltiSnipsEdit to split your window.
+"let g:UltiSnipsEditSplit="vertical"
 
 "Move Macro
 nnoremap <A-j> :m .+1<CR>==
@@ -208,13 +213,15 @@ vnoremap <C-a> :call Incr()<CR>
 "gutentags
 let g:gutentags_ctags_executable = 'ctags'
 let g:gutentags_ctags_exclude = ['*.json', '*.xml',
-                            \  '*.ini', '*.rst', '*.md',
-                            \ '*var/cache*', '*var/log*', ]
+            \  '*.ini', '*.rst', '*.md',
+            \ '*var/cache*', '*var/log*', ]
 
 "TagBar
 nmap <Leader>m :TagbarToggle<CR>
 
 "completion options PHP
-let g:phpcomplete_parse_docblock_comments = 1
-let g:phpcomplete_enhance_jump_to_definition = 1
+"let g:phpcomplete_parse_docblock_comments = 1
+"let g:phpcomplete_enhance_jump_to_definition = 1
 
+"ident Guide
+set list lcs=tab:\*\

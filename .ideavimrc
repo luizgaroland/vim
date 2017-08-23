@@ -1,0 +1,18 @@
+"leader key
+let mapleader = " "
+
+"splits remap
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-L> <C-W>l
+nnoremap <C-H> <C-W>h
+
+"split opening
+set splitbelow
+set splitright
+
+" 1. split to tiled windows
+nmap <Leader>w= :vsplit<CR>
+nmap <Leader>w- :split<CR>
+
+set surround
