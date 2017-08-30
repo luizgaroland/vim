@@ -46,10 +46,10 @@ Plugin 'sheerun/vim-polyglot'
 
 "CSS
 Plugin 'lilydjwg/colorizer'
-Plugin 'hail2u/vim-css3-syntax'
+"Plugin 'hail2u/vim-css3-syntax'
 
 "PHP
-Plugin 'shawncplus/phpcomplete.vim'
+"Plugin 'shawncplus/phpcomplete.vim'
 
 "PYTHON
 "Plugin 'klen/python-mode.git'
@@ -69,6 +69,14 @@ let mapleader = " "
 "line numbers
 set number
 set cc=80
+
+"Tweaks
+syntax sync maxlines=70
+set synmaxcol=800
+
+"Automatic view
+au BufWinLeave ?* mkview
+au BufWinEnter ?* silent loadview
 
 "matchit
 set nocompatible
@@ -119,7 +127,7 @@ set splitright
 
 " Setup some default ignores
 let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+            \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site|node_modules)$',
             \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
             \}
 
@@ -225,3 +233,9 @@ nmap <Leader>m :TagbarToggle<CR>
 
 "ident Guide
 set list lcs=tab:\*\
+
+"Tern path to completor
+let g:completor_node_binary = '~/bin/tern/node_modules/tern/bin/tern'
+
+
+
