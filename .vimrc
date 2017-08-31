@@ -39,14 +39,14 @@ Plugin 'sheerun/vim-polyglot'
 "Plugin 'alvan/vim-closetag'
 
 "Stylus
-"Plugin 'wavded/vim-stylus'
+Plugin 'wavded/vim-stylus'
 
 "GIT
 "Plugin 'tpope/vim-fugitive'
 
 "CSS
 Plugin 'lilydjwg/colorizer'
-"Plugin 'hail2u/vim-css3-syntax'
+Plugin 'hail2u/vim-css3-syntax'
 
 "PHP
 "Plugin 'shawncplus/phpcomplete.vim'
@@ -73,10 +73,6 @@ set cc=80
 "Tweaks
 syntax sync maxlines=70
 set synmaxcol=800
-
-"Automatic view
-au BufWinLeave ?* mkview
-au BufWinEnter ?* silent loadview
 
 "matchit
 set nocompatible
