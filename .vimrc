@@ -45,7 +45,6 @@ Plugin 'wavded/vim-stylus'
 "Plugin 'tpope/vim-fugitive'
 
 "CSS
-Plugin 'lilydjwg/colorizer'
 Plugin 'hail2u/vim-css3-syntax'
 
 "PHP
@@ -173,9 +172,6 @@ nmap <leader>gP :Gpull<cr>
 "autoclosetags
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.blade.php"
 
-"autosave
-let g:auto_save = 1
-
 "search selected
 vnoremap // y/<C-R>"<CR>
 
@@ -232,6 +228,5 @@ set list lcs=tab:\*\
 
 "Tern path to completor
 let g:completor_node_binary = '~/bin/tern/node_modules/tern/bin/tern'
-
-
+let g:completor_refresh_always = 0
 
