@@ -17,15 +17,14 @@ Plugin 'tpope/vim-surround'
 Plugin 'wellle/targets.vim'
 Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'mhinz/vim-startify'
-Plugin 'myusuf3/numbers.vim'
-Plugin 'tpope/vim-repeat'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'tpope/vim-repeat'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/vim-auto-save'
 Plugin 'majutsushi/tagbar'
-Plugin 'Yggdroot/indentLine'
 Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'Yggdroot/indentLine'
 Plugin 'ajh17/VimCompletesMe.git'
 Plugin 'maralla/completor.vim'
 Plugin 'sheerun/vim-polyglot'
@@ -72,6 +71,7 @@ set cc=80
 "Tweaks
 syntax sync maxlines=70
 set synmaxcol=800
+set relativenumber
 
 "matchit
 set nocompatible
