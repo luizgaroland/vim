@@ -19,15 +19,16 @@ Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'tpope/vim-repeat'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'junegunn/fzf.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/vim-auto-save'
-Plugin 'majutsushi/tagbar'
-Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'Yggdroot/indentLine'
 Plugin 'ajh17/VimCompletesMe.git'
 Plugin 'maralla/completor.vim'
 Plugin 'sheerun/vim-polyglot'
+"Plugin 'ctrlpvim/ctrlp.vim'
+"Plugin 'majutsushi/tagbar'
+"Plugin 'ludovicchabant/vim-gutentags'
 
 "Snippets
 "Plugin 'SirVer/ultisnips'
@@ -121,15 +122,15 @@ set splitbelow
 set splitright
 
 " Setup some default ignores
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site|node_modules)$',
-            \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-            \}
+"let g:ctrlp_custom_ignore = {
+            "\ 'dir':  '\v[\/](\.(git|hg|svn)|\_site|node_modules)$',
+            "\ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+            "\}
 
-" Use the nearest .git directory as the cwd
-" This makes a lot of sense if you are working on a project that is in version
-" control. It also supports works with .svn, .hg, .bzr.
-let g:ctrlp_working_path_mode = 'r'
+"" Use the nearest .git directory as the cwd
+"" This makes a lot of sense if you are working on a project that is in version
+"" control. It also supports works with .svn, .hg, .bzr.
+"let g:ctrlp_working_path_mode = 'r'
 
 "Startfy config
 autocmd User Startified setlocal cursorline
@@ -230,3 +231,21 @@ set list lcs=tab:\*\
 let g:completor_node_binary = '~/bin/tern/node_modules/tern/bin/tern'
 let g:completor_refresh_always = 0
 
+"fzf
+"If installed using git
+set rtp+=~/.fzf
+
+nmap <C-p> :Files<CR>
+
+
+"Macros
+let @a = 'csW"W.W.W.W.W.W.W.W.W.^'
+let @s = 'ElxElxElxElxElxElxElxElxElx^'
+let @d = 'V:s/\"\"/\", \"/g'
+let @f = '[A]^Vypppppkkkkk'
+let @g = 'jjjj$A,i[5jA]5k^'
+let @h = 'EEEEEdt]jE.jE.jE.jE.4k^'
+let @j = 'jlveElxjveElElxjveEEElxjveEEEElxjveEEEEElx5k^'
+let @k = "^^i'5jA'^5k"
+let @l = 'JJJJJ^'
+let @z = '@a@s@d@f@g@h@j@k@l'
