@@ -242,10 +242,21 @@ nmap <C-p> :Files<CR>
 let @a = 'csW"W.W.W.W.W.W.W.W.W.^'
 let @s = 'ElxElxElxElxElxElxElxElxElx^'
 let @d = 'V:s/\"\"/\", \"/g'
-let @f = '[A]^Vypppppkkkkk'
-let @g = 'jjjj$A,i[5jA]5k^'
+let @f = 'i[A]^Vypppppkkkkk'
+let @g = 'jjjj$A,i[5jA]hx5k^'
 let @h = 'EEEEEdt]jE.jE.jE.jE.4k^'
 let @j = 'jlveElxjveElElxjveEEElxjveEEEElxjveEEEEElx5k^'
 let @k = "^^i'5jA'^5k"
 let @l = 'JJJJJ^'
 let @z = '@a@s@d@f@g@h@j@k@l'
+
+let @q = 'csW"W.W.W.W.W.W.W.W.^'
+let @w = 'ElxElxElxElxElxElxElxElx^'
+let @e = 'V:s/\"\"/\", \"/g'
+let @r = 'i[A]^Vyppppkkkk'
+let @t = 'jjjj$A,i[4jA]hx4k^'
+let @y = 'EEEEEdt]jE.jE.jE.3k^'
+let @u = 'jlveElxjveElElxjveEEElxjveEEEElx4k^'
+let @i = "^^i'4jA'^4k"
+let @o = 'JJJJ^'
+let @p = '@q@w@e@r@t@y@u@i@o'
