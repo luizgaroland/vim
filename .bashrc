@@ -117,5 +117,8 @@ if ! shopt -oq posix; then
 fi
 
 feh --bg-scale ~/Downloads/inthecourt.jpg
+set -o vi
 
 export PATH="/home/$USER/bin:$PATH"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

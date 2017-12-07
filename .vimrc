@@ -23,12 +23,16 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/vim-auto-save'
 Plugin 'Yggdroot/indentLine'
-Plugin 'ajh17/VimCompletesMe.git'
-Plugin 'maralla/completor.vim'
 Plugin 'sheerun/vim-polyglot'
-"Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'roxma/nvim-completion-manager'
+Plugin 'roxma/nvim-cm-tern'
+Plugin 'roxma/LanguageServer-php-neovim'
+Plugin 'ajh17/VimCompletesMe.git'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'w0rp/ale'
+Plugin 'yangmillstheory/vim-snipe'
+"Plugin 'maralla/completor.vim'
 "Plugin 'majutsushi/tagbar'
-"Plugin 'ludovicchabant/vim-gutentags'
 
 "Snippets
 "Plugin 'SirVer/ultisnips'
@@ -224,12 +228,18 @@ nmap <Leader>m :TagbarToggle<CR>
 "let g:phpcomplete_parse_docblock_comments = 1
 "let g:phpcomplete_enhance_jump_to_definition = 1
 
+"Tern path to completor
+"let g:completor_node_binary = '~/bin/tern/node_modules/tern/bin/tern'
+"let g:completor_refresh_always = 0
+
 "ident Guide
 set list lcs=tab:\*\
 
-"Tern path to completor
-let g:completor_node_binary = '~/bin/tern/node_modules/tern/bin/tern'
-let g:completor_refresh_always = 0
+"Completion options
+set shortmess+=c
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+let g:cm_matcher = {'module': 'cm_matchers.abbrev_matcher'}
 
 "fzf
 "If installed using git
@@ -260,3 +270,26 @@ let @u = 'jlveElxjveElElxjveEEElxjveEEEElx4k^'
 let @i = "^^i'4jA'^4k"
 let @o = 'JJJJ^'
 let @p = '@q@w@e@r@t@y@u@i@o'
+
+"Vim-snipe
+map <leader><leader>F <Plug>(snipe-F)
+map <leader><leader>f <Plug>(snipe-f)
+map <leader><leader>T <Plug>(snipe-T)
+map <leader><leader>t <Plug>(snipe-t)
+map <leader><leader>w <Plug>(snipe-w)
+map <leader><leader>W <Plug>(snipe-W)
+map <leader><leader>e <Plug>(snipe-e)
+map <leader><leader>E <Plug>(snipe-E)
+map <leader><leader>b <Plug>(snipe-b)
+map <leader><leader>B <Plug>(snipe-B)
+map <leader><leader>w <Plug>(snipe-w)
+map <leader><leader>W <Plug>(snipe-W)
+map <leader><leader>e <Plug>(snipe-e)
+map <leader><leader>E <Plug>(snipe-E)
+map <leader><leader>b <Plug>(snipe-b)
+map <leader><leader>B <Plug>(snipe-B)
+nmap <leader><leader>x <Plug>(snipe-f-x)
+nmap <leader><leader>r <Plug>(snipe-f-r)
+nmap <leader><leader>R <Plug>(snipe-F-r)
+nmap <leader><leader>X <Plug>(snipe-F-x)
+let g:snipe_jump_tokens = 'asdfghjkl'
