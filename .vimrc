@@ -13,25 +13,27 @@ Plugin 'VundleVim/Vundle.vim'
 " Git plugin not hosted on GitHub
 "Essential
 Plugin 'morhetz/gruvbox'
-Plugin 'tpope/vim-surround'
 Plugin 'wellle/targets.vim'
 Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'tpope/vim-repeat'
 Plugin 'junegunn/fzf.vim'
+Plugin 'ajh17/VimCompletesMe.git'
+Plugin 'w0rp/ale'
+Plugin 'yangmillstheory/vim-snipe'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/vim-auto-save'
 Plugin 'Yggdroot/indentLine'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'tpope/vim-surround'
 Plugin 'roxma/nvim-completion-manager'
 Plugin 'roxma/nvim-cm-tern'
-Plugin 'roxma/LanguageServer-php-neovim'
-Plugin 'ajh17/VimCompletesMe.git'
-Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'w0rp/ale'
-Plugin 'yangmillstheory/vim-snipe'
+Plugin 'autozimu/LanguageClient-neovim'
+"Plugin 'roxma/LanguageServer-php-neovim'
 "Plugin 'maralla/completor.vim'
+"Plugin 'machakann/vim-sandwich'
+"Plugin 'ludovicchabant/vim-gutentags'
 "Plugin 'majutsushi/tagbar'
 
 "Snippets
@@ -106,6 +108,7 @@ set tabstop=4 softtabstop=0 shiftwidth=4 expandtab
 
 "colorScheme
 set background=dark
+let g:gruvbox_contrast_dark='medium'
 colorscheme gruvbox
 syntax enable
 set guifont=Monaco\ 13
@@ -169,13 +172,13 @@ let $rc='~/.vimrc'
 
 "Fugitive
 "rebind my favorite commands from Git.vim for Fugitive
-nmap <leader>gs :Gstatus<cr>
-nmap <leader>gc :Gcommit<cr>
-nmap <leader>gp :Gpush<cr>
-nmap <leader>gP :Gpull<cr>
+"nmap <leader>gs :Gstatus<cr>
+"nmap <leader>gc :Gcommit<cr>
+"nmap <leader>gp :Gpush<cr>
+"nmap <leader>gP :Gpull<cr>
 
 "autoclosetags
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.blade.php"
+"let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.blade.php"
 
 "search selected
 vnoremap // y/<C-R>"<CR>
@@ -216,20 +219,20 @@ endfu
 vnoremap <C-a> :call Incr()<CR>
 
 "gutentags
-let g:gutentags_ctags_executable = 'ctags'
-let g:gutentags_ctags_exclude = ['*.json', '*.xml',
-            \  '*.ini', '*.rst', '*.md',
-            \ '*var/cache*', '*var/log*', ]
+"let g:gutentags_ctags_executable = 'ctags'
+"let g:gutentags_ctags_exclude = ['*.json', '*.xml',
+            "\  '*.ini', '*.rst', '*.md',
+            "\ '*var/cache*', '*var/log*', ]
 
 "TagBar
-nmap <Leader>m :TagbarToggle<CR>
+"nmap <Leader>m :TagbarToggle<CR>
 
 "completion options PHP
 "let g:phpcomplete_parse_docblock_comments = 1
 "let g:phpcomplete_enhance_jump_to_definition = 1
 
 "Tern path to completor
-"let g:completor_node_binary = '~/bin/tern/node_modules/tern/bin/tern'
+"let g:completor_node_binary = '/usr/bin/node'
 "let g:completor_refresh_always = 0
 
 "ident Guide
@@ -246,7 +249,6 @@ let g:cm_matcher = {'module': 'cm_matchers.abbrev_matcher'}
 set rtp+=~/.fzf
 
 nmap <C-p> :Files<CR>
-
 
 "Macros
 let @a = 'csW"W.W.W.W.W.W.W.W.W.^'
@@ -292,4 +294,15 @@ nmap <leader><leader>x <Plug>(snipe-f-x)
 nmap <leader><leader>r <Plug>(snipe-f-r)
 nmap <leader><leader>R <Plug>(snipe-F-r)
 nmap <leader><leader>X <Plug>(snipe-F-x)
+
 let g:snipe_jump_tokens = 'asdfghjkl'
+
+"Change path to current file
+noremap <Leader><Leader>cp :cd %:p:h<CR>
+
+"LanguagueClient Javascript
+let g:LanguageClient_serverCommands = {
+            \ 'javascript': ['javascript-typescript-stdio'],
+            \ 'php': ['php', 'vendor/felixfbecker/language-server/bin/php-language-server.php'],
+            \ }
+
