@@ -43,7 +43,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -120,5 +120,9 @@ feh --bg-scale ~/Downloads/inthecourt.jpg
 set -o vi
 
 export PATH="/home/$USER/bin:$PATH"
+export TERM="screen-256color"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+GIT_PROMPT_ONLY_IN_REPO=1
+source ~/.bash-git-prompt/gitprompt.sh
