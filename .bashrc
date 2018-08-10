@@ -117,12 +117,17 @@ if ! shopt -oq posix; then
 fi
 
 feh --bg-scale ~/Downloads/inthecourt.jpg
-set -o vi
 
-export PATH="/home/$USER/bin:$PATH"
+export PATH="/home/$USER/bin:/home/l/Android/Sdk/platform-tools/:$PATH"
 export TERM="screen-256color"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 GIT_PROMPT_ONLY_IN_REPO=1
 source ~/.bash-git-prompt/gitprompt.sh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/l/google-cloud-sdk/path.bash.inc' ]; then source '/home/l/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/l/google-cloud-sdk/completion.bash.inc' ]; then source '/home/l/google-cloud-sdk/completion.bash.inc'; fi

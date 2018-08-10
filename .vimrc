@@ -1,28 +1,47 @@
 call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
-Plug 'wellle/targets.vim'
-Plug 'machakann/vim-sandwich'
 Plug 'zhaocai/GoldenView.Vim'
 Plug 'mhinz/vim-startify'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-repeat'
 Plug 'junegunn/fzf.vim'
-Plug 'ajh17/VimCompletesMe'
-Plug 'w0rp/ale'
-Plug 'yangmillstheory/vim-snipe'
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-scripts/vim-auto-save'
 Plug 'Yggdroot/indentLine'
+Plug 'vim-scripts/vim-auto-save'
+"Movement and text Objects
+Plug 'yangmillstheory/vim-snipe'
+Plug 'wellle/targets.vim'
+Plug 'machakann/vim-sandwich'
+"Languagues
 Plug 'sheerun/vim-polyglot'
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern'
-Plug 'autozimu/LanguageClient-neovim'
-Plug 'roxma/LanguageServer-php-neovim'
-Plug 'wavded/vim-stylus'
-Plug 'hail2u/vim-css3-syntax'
+Plug 'iloginow/vim-stylus'
+"Auto complete
+Plug 'ajh17/VimCompletesMe'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'wellle/tmux-complete.vim'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+"Linting
+Plug 'w0rp/ale'
 call plug#end()
 
 filetype plugin indent on
+
+"Deoplete
+let g:deoplete#enable_at_startup = 1
+"Add extra filetypes
+let g:deoplete#sources#ternjs#filetypes = [
+            \ 'jsx',
+            \ ]
+
+"LanguagueClient Javascript
+let g:LanguageClient_serverCommands = {
+    \ 'jsx': ['javascript-typescript-stdio'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'php': ['php', 'vendor/felixfbecker/language-server/bin/php-language-server.php'],
+    \ }
 
 "leader key
 let mapleader = " "
@@ -113,9 +132,6 @@ let $rc='~/.vimrc'
 "search selected
 vnoremap // y/<C-R>"<CR>
 
-"Completion
-set completeopt=menu
-
 "Move Macro
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -142,12 +158,6 @@ vnoremap <C-a> :call Incr()<CR>
 
 "ident Guide
 set list lcs=tab:\*\
-
-"Completion options
-set shortmess+=c
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-let g:cm_matcher = {'module': 'cm_matchers.abbrev_matcher'}
 
 "fzf
 "If installed using git
@@ -181,10 +191,4 @@ let g:snipe_jump_tokens = 'asdfghjkl'
 
 "Change path to current file
 noremap <Leader><Leader>cp :cd %:p:h<CR>
-
-"LanguagueClient Javascript
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'php': ['php', 'vendor/felixfbecker/language-server/bin/php-language-server.php'],
-    \ }
 
