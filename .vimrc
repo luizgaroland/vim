@@ -12,6 +12,7 @@ Plug 'vim-scripts/vim-auto-save'
 Plug 'yangmillstheory/vim-snipe'
 Plug 'wellle/targets.vim'
 Plug 'machakann/vim-sandwich'
+Plug 'michaeljsmith/vim-indent-object'
 "Languagues
 Plug 'sheerun/vim-polyglot'
 Plug 'iloginow/vim-stylus'
@@ -52,7 +53,7 @@ set cc=80
 
 "Tweaks
 syntax sync maxlines=70
-set synmaxcol=800
+set synmaxcol=1500
 set relativenumber
 
 "matchit
@@ -86,7 +87,6 @@ set background=dark
 let g:gruvbox_contrast_dark='medium'
 colorscheme gruvbox
 syntax enable
-set guifont=Monaco\ 13
 
 if &term =~ '256color'
     " disable Background Color Erase (BCE)
@@ -141,8 +141,8 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 "Better j and k
-nnoremap <expr> j v:count ? 'j' : 'gj'
-nnoremap <expr> k v:count ? 'k' : 'gk'
+noremap <expr> k (v:count ? 'k' : 'gk')
+noremap <expr> j (v:count ? 'j' : 'gj')
 
 "Increment Column number
 fu! Incr()
@@ -192,3 +192,4 @@ let g:snipe_jump_tokens = 'asdfghjkl'
 "Change path to current file
 noremap <Leader><Leader>cp :cd %:p:h<CR>
 
+let g:NERDCustomDelimiters = { 'stylus': { 'left': '//','right': '' } }
