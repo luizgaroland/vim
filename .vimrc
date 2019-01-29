@@ -13,12 +13,17 @@ Plug 'yangmillstheory/vim-snipe'
 Plug 'wellle/targets.vim'
 Plug 'machakann/vim-sandwich'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'tmhedberg/matchit'
 "Languagues
 Plug 'sheerun/vim-polyglot'
 Plug 'iloginow/vim-stylus'
+Plug 'othree/html5.vim'
+Plug 'othree/csscomplete.vim'
+Plug 'hail2u/vim-css3-syntax'
 "Auto complete
 Plug 'ajh17/VimCompletesMe'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'carlitux/deoplete-ternjs'
 Plug 'wellle/tmux-complete.vim'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -36,6 +41,8 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#ternjs#filetypes = [
             \ 'jsx',
             \ ]
+
+let g:deoplete#sources#ternjs#tern_bin = '/home/l/.yarn/bin/ternjs'
 
 "LanguagueClient Javascript
 let g:LanguageClient_serverCommands = {
@@ -55,11 +62,6 @@ set cc=80
 syntax sync maxlines=70
 set synmaxcol=1500
 set relativenumber
-
-"matchit
-set nocompatible
-filetype plugin on
-runtime macros/matchit.vim
 
 "if Gvim
 if has("gui_running")
