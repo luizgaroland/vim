@@ -4,10 +4,11 @@ Plug 'zhaocai/GoldenView.Vim'
 Plug 'mhinz/vim-startify'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-repeat'
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-scripts/vim-auto-save'
+Plug 'cloudhead/neovim-fuzzy'
 "Movement and text Objects
 Plug 'yangmillstheory/vim-snipe'
 Plug 'wellle/targets.vim'
@@ -16,33 +17,17 @@ Plug 'michaeljsmith/vim-indent-object'
 "Languagues
 Plug 'sheerun/vim-polyglot'
 Plug 'iloginow/vim-stylus'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'elixir-editors/vim-elixir'
 "Auto complete
 Plug 'ajh17/VimCompletesMe'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'wellle/tmux-complete.vim'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Linting
 Plug 'w0rp/ale'
 call plug#end()
 
 filetype plugin indent on
-
-"Deoplete
-let g:deoplete#enable_at_startup = 1
-"Add extra filetypes
-let g:deoplete#sources#ternjs#filetypes = [
-            \ 'jsx',
-            \ ]
-
-"LanguagueClient Javascript
-let g:LanguageClient_serverCommands = {
-    \ 'jsx': ['javascript-typescript-stdio'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'php': ['php', 'vendor/felixfbecker/language-server/bin/php-language-server.php'],
-    \ }
 
 "leader key
 let mapleader = " "
@@ -74,7 +59,6 @@ endif
 if has('nvim')
     "nvim terminal mode exit
     tnoremap <Esc> <C-\><C-n>
-
     "Remove hl search
     set nohlsearch
 endif
@@ -159,11 +143,8 @@ vnoremap <C-a> :call Incr()<CR>
 "ident Guide
 set list lcs=tab:\*\
 
-"fzf
-"If installed using git
-set rtp+=~/.fzf
-
-nmap <C-p> :Files<CR>
+"nmap <C-p> :Files<CR>
+noremap <C-p> :FuzzyOpen<CR>
 
 "Vim-snipe
 map <leader><leader>F <Plug>(snipe-F)
@@ -193,3 +174,8 @@ let g:snipe_jump_tokens = 'asdfghjkl'
 noremap <Leader><Leader>cp :cd %:p:h<CR>
 
 let g:NERDCustomDelimiters = { 'stylus': { 'left': '//','right': '' } }
+
+augroup VimCSS3Syntax
+  autocmd!
+  autocmd FileType css setlocal iskeyword+=-
+augroup END
