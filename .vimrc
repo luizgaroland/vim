@@ -17,8 +17,6 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'tmhedberg/matchit'
 "Languagues
 Plug 'sheerun/vim-polyglot'
-Plug 'iloginow/vim-stylus'
-<<<<<<< HEAD
 Plug 'hail2u/vim-css3-syntax'
 Plug 'elixir-editors/vim-elixir'
 "Auto complete
