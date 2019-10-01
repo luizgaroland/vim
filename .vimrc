@@ -14,17 +14,13 @@ Plug 'yangmillstheory/vim-snipe'
 Plug 'wellle/targets.vim'
 Plug 'machakann/vim-sandwich'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'tmhedberg/matchit'
 "Languagues
 Plug 'sheerun/vim-polyglot'
+Plug 'iloginow/vim-stylus'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'elixir-editors/vim-elixir'
 "Auto complete
 Plug 'ajh17/VimCompletesMe'
-Plug 'othree/html5.vim'
-Plug 'othree/csscomplete.vim'
-Plug 'hail2u/vim-css3-syntax'
-"Auto complete
 Plug 'wellle/tmux-complete.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Linting
@@ -44,6 +40,11 @@ set cc=80
 syntax sync maxlines=70
 set synmaxcol=1500
 set relativenumber
+
+"matchit
+set nocompatible
+filetype plugin on
+runtime macros/matchit.vim
 
 "if Gvim
 if has("gui_running")
