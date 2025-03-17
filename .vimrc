@@ -1,30 +1,55 @@
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.vim/plugged')
+"Configuration
 Plug 'morhetz/gruvbox'
-Plug 'zhaocai/GoldenView.Vim'
+"Plug 'zhaocai/GoldenView.Vim'
 Plug 'mhinz/vim-startify'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-repeat'
-"Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-scripts/vim-auto-save'
-Plug 'cloudhead/neovim-fuzzy'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'nvim-tree/nvim-web-devicons'
+"Plug 'stevearc/oil.nvim'
+
+
+Plug 'tpope/vim-dotenv'
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-telescope/telescope.nvim'
+"Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+"Plug 'MunifTanjim/nui.nvim'
+"Plug 'nvimtools/none-ls.nvim'
+
+
 "Movement and text Objects
 Plug 'yangmillstheory/vim-snipe'
 Plug 'wellle/targets.vim'
 Plug 'machakann/vim-sandwich'
 Plug 'michaeljsmith/vim-indent-object'
+
 "Languagues
-Plug 'sheerun/vim-polyglot'
-Plug 'iloginow/vim-stylus'
-Plug 'hail2u/vim-css3-syntax'
-Plug 'elixir-editors/vim-elixir'
+"Plug 'leafgarland/typescript-vim'
+"Plug 'sheerun/vim-polyglot'
+"Plug 'iloginow/vim-stylus' Plug 'hail2u/vim-css3-syntax' Plug 'elixir-editors/vim-elixir'
+Plug 'brett-griffin/phpdocblocks.vim'
+
 "Auto complete
-Plug 'ajh17/VimCompletesMe'
-Plug 'wellle/tmux-complete.vim'
+"Plug 'vim-scripts/VimCompletesMe'
+"Plug 'wellle/tmux-complete.vim'
+"
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Linting
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
+"AI
+Plug 'github/copilot.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -39,7 +64,7 @@ set cc=80
 "Tweaks
 syntax sync maxlines=70
 set synmaxcol=1500
-set relativenumber
+"set relativenumber
 
 "matchit
 set nocompatible
@@ -143,8 +168,8 @@ vnoremap <C-a> :call Incr()<CR>
 "ident Guide
 set list lcs=tab:\*\
 
-"nmap <C-p> :Files<CR>
-noremap <C-p> :FuzzyOpen<CR>
+" Find files
+noremap <C-p> :Files<CR>
 
 "Vim-snipe
 map <leader><leader>F <Plug>(snipe-F)
@@ -173,9 +198,48 @@ let g:snipe_jump_tokens = 'asdfghjkl'
 "Change path to current file
 noremap <Leader><Leader>cp :cd %:p:h<CR>
 
-let g:NERDCustomDelimiters = { 'stylus': { 'left': '//','right': '' } }
+noremap <Leader><Leader>p :NvimTreeOpen<CR>
+noremap <Leader><Leader>d :PHPDocBlocks<CR>
 
-augroup VimCSS3Syntax
-  autocmd!
-  autocmd FileType css setlocal iskeyword+=-
-augroup END
+" Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
+" delays and poor user experience
+set updatetime=300
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved
+set signcolumn=yes
+
+inoremap <silent><script><expr> <C-d> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+    \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+lua << EOF
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+
+    vim.opt.termguicolors = true
+
+    require("nvim-tree").setup()
+EOF
+
